@@ -1,10 +1,7 @@
 package model;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * 
@@ -20,11 +17,12 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String username;
-	
+	private ArrayList<Album> albumList;
 	
 	
 	public User(String username) {
 		this.setUsername(username);
+		this.albumList = new ArrayList<Album>();
 	}
 
 	public String getUsername() {
@@ -38,17 +36,8 @@ public class User implements Serializable {
 	public String toString() {
 		return this.username;
 	}
-	/*
-	public static void main() throws IOException {
-		User admin = new User("admin");
-		User stock = new User("stock");
-		
-		File f = new File("users.txt");
-		FileOutputStream fos = new FileOutputStream(f);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(admin);
-		oos.writeObject(stock);
-		oos.close();
+
+	public ArrayList<Album> getAlbumList() {
+		return albumList;
 	}
-	*/
 }

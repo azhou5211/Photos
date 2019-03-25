@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+@author Andrew Zhou, Bang An
+-->
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.photoController">
+   <children>
+      <MenuBar fx:id="myMenuBar" layoutX="-10.0" layoutY="2.0" prefHeight="25.0" prefWidth="756.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="User">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#toAlbum" text="Back To Album" />
+                  <MenuItem mnemonicParsing="false" onAction="#logoff" text="Logoff" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>

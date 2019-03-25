@@ -13,12 +13,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.*;
 
@@ -32,6 +33,7 @@ public class adminController {
 
 	@FXML private ListView<User> userList;
 	@FXML private TextField newUserName;
+	@FXML private MenuBar myMenuBar;
 
 	public void initialize() throws IOException, ClassNotFoundException {
 		FileInputStream fos = new FileInputStream("files/users.txt");
@@ -39,17 +41,21 @@ public class adminController {
 		@SuppressWarnings("unchecked")
 		ArrayList<User> listOfUsers = (ArrayList<User>) oos.readObject();
 		oos.close();
-		
 		for(User u:  listOfUsers) {
 			userList.getItems().add(u);
+			//System.out.println(u.getAlbumList().size());
 		}
+		sortList();
 	}
 	
-	public void logoff(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+	public void logoff(ActionEvent e) throws IOException, ClassNotFoundException {
+		//Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+		AnchorPane root = (AnchorPane) loader.load();
+		loginController controller = loader.getController();
+		controller.startup();
 		Scene scene = new Scene(root);
-		
-		Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		Stage window = (Stage) myMenuBar.getScene().getWindow();
 		window.setScene(scene);
 		window.setTitle("Photos");
 		window.show();
@@ -82,7 +88,6 @@ public class adminController {
 			setAlert("Cannot delete admin!");
 			return;
 		}
-		
 		userList.getItems().remove(u);
 		write();
 	}

@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="284.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.adminController">
    <children>
-      <MenuBar layoutX="-10.0" layoutY="2.0" prefHeight="25.0" prefWidth="294.0">
+      <MenuBar fx:id="myMenuBar" layoutX="-10.0" layoutY="2.0" prefHeight="25.0" prefWidth="294.0">
          <menus>
             <Menu mnemonicParsing="false" text="User">
                <items>
