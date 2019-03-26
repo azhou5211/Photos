@@ -5,10 +5,19 @@
 -->
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.photoController">
    <children>
@@ -22,6 +31,72 @@
             </Menu>
          </menus>
       </MenuBar>
-      <Button layoutX="502.0" layoutY="326.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photos" />
+      <TabPane layoutX="11.0" layoutY="38.0" prefHeight="384.0" prefWidth="724.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Tile View">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TilePane fx:id="tilepane" layoutX="14.0" layoutY="14.0" prefHeight="384.0" prefWidth="381.0" style="-fx-border-color: lightgrey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="343.0" AnchorPane.topAnchor="0.0" />
+                        <TabPane layoutX="381.0" prefHeight="355.0" prefWidth="343.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab text="Add/Remove Photo">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="326.0" prefWidth="311.0" style="-fx-border-color: lightgrey;">
+                                       <children>
+                                          <Button layoutX="39.0" layoutY="76.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photos" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Tag Manager">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: lightgrey;">
+                                       <children>
+                                          <ListView layoutX="14.0" layoutY="14.0" prefHeight="167.0" prefWidth="315.0" />
+                                          <GridPane alignment="CENTER" layoutX="14.0" layoutY="189.0" prefHeight="30.0" prefWidth="316.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0" text="Add Tag" GridPane.columnIndex="2" />
+                                                <TextField prefHeight="25.0" prefWidth="95.0" text="Tag Value" GridPane.columnIndex="1" />
+                                                <TextField prefHeight="25.0" prefWidth="95.0" text="Tag Name" />
+                                             </children>
+                                          </GridPane>
+                                          <Button contentDisplay="CENTER" layoutX="120.0" layoutY="252.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Remove Tag" />
+                                       </children></AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Caption Manager">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField fx:id="captionTextField" layoutX="14.0" layoutY="14.0" prefHeight="253.0" prefWidth="315.0" />
+                                          <Button layoutX="131.0" layoutY="276.0" mnemonicParsing="false" text="Edit Caption" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Slide View">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: lightgrey;">
+                     <children>
+                        <Pagination layoutX="49.0" layoutY="36.0" prefHeight="355.0" prefWidth="724.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

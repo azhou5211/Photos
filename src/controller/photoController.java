@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.activation.MimetypesFileTypeMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,12 +41,21 @@ public class photoController {
 		//File photoFile = chooser.showOpenDialog(new Stage());
 		File photoFile = chooser.showOpenDialog(dialog);
 		if(photoFile!=null) {
-			System.out.println(photoFile.getAbsolutePath());
-			System.out.println(dateFormat.format(photoFile.lastModified()));
+			//System.out.println(photoFile.getAbsolutePath());
+			//System.out.println(dateFormat.format(photoFile.lastModified()));
+			Date photoDate = new Date(photoFile.lastModified());
 			Photo photo = new Photo();
 			photo.setDate(photoFile.lastModified());
-			System.out.println(dateFormat.format(photo.getDate()));
+			//System.out.println(dateFormat.format(photo.getDate()));
 			globalAlbum.getPhotoList().add(photo);
+			if(globalAlbum.getCreateDate()==null) {
+				globalAlbum.setCreateDate(photoFile.lastModified());
+				globalAlbum.setLatestDate(photoFile.lastModified());
+			} else if (photoDate.compareTo(globalAlbum.getCreateDate()) < 0) {
+				globalAlbum.setCreateDate(photoDate);
+			} else if (photoDate.compareTo(globalAlbum.getLatestDate()) > 0) {
+				globalAlbum.setLatestDate(photoDate);
+			}
 			/*
 			String mimeType= new MimetypesFileTypeMap().getContentType(photoFile);
 			if (mimeType.startsWith("image/")) {

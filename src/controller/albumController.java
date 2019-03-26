@@ -133,6 +133,11 @@ public class albumController {
 		albumName.setText(a.toString());
 		//numberOfPhotos.setText(String.format("%d", a.getNumberOfPhotos()));
 		numberOfPhotos.setText(String.format("%d", a.getPhotoList().size()));
+		if(a.getCreateDate()==null && a.getLatestDate()==null) {
+			creationDate.setText("Not Available");
+			modifiedDate.setText("Not Available");
+			return;
+		}
 		creationDate.setText(dateFormat.format(a.getCreateDate()));
 		modifiedDate.setText(dateFormat.format(a.getLatestDate()));
 	}

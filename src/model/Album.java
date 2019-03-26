@@ -28,8 +28,8 @@ public class Album implements Serializable {
 		this.albumName = name;
 		this.photoList = new ArrayList<Photo>();
 		this.numberOfPhotos = 0;
-		setCreateDate(new Date());
-		setLatestDate(new Date());
+		setCreateDate(null);
+		setLatestDate(null);
 	}
 	
 	public int getNumberOfPhotos() {
@@ -59,6 +59,10 @@ public class Album implements Serializable {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	
+	public void setCreateDate(long createDate) {
+		this.createDate = new Date(createDate);
+	}
 
 	public Date getLatestDate() {
 		return latestDate;
@@ -66,5 +70,9 @@ public class Album implements Serializable {
 
 	public void setLatestDate(Date latestDate) {
 		this.latestDate = latestDate;
+	}
+	
+	public void setLatestDate(long latestDate) {
+		this.latestDate = new Date(latestDate);
 	}
 }

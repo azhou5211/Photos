@@ -54,12 +54,12 @@
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name" GridPane.halignment="CENTER" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number Of Photos" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Creation Date" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Early Date" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                               <TextField fx:id="creationDate" editable="false" prefHeight="25.0" prefWidth="211.0" GridPane.rowIndex="4" />
                               <TextField fx:id="modifiedDate" editable="false" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                               <TextField fx:id="albumName" editable="false" prefHeight="25.0" prefWidth="207.0" GridPane.rowIndex="1" />
                               <TextField fx:id="numberOfPhotos" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Modified Date" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Latest Date" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                         <TextField fx:id="renameTextField" layoutX="171.0" layoutY="122.0" />
