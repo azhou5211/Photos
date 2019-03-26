@@ -131,7 +131,8 @@ public class albumController {
 			return;
 		}
 		albumName.setText(a.toString());
-		numberOfPhotos.setText(String.format("%d", a.getNumberOfPhotos()));
+		//numberOfPhotos.setText(String.format("%d", a.getNumberOfPhotos()));
+		numberOfPhotos.setText(String.format("%d", a.getPhotoList().size()));
 		creationDate.setText(dateFormat.format(a.getCreateDate()));
 		modifiedDate.setText(dateFormat.format(a.getLatestDate()));
 	}
@@ -149,12 +150,20 @@ public class albumController {
 	}
 	
 	public void viewAlbum(ActionEvent e) throws IOException, ClassNotFoundException {
+		Album album = albumList.getSelectionModel().getSelectedItem();
+		if(album==null) {
+			setAlert("Need to select an Album to View!");
+			return;
+		}
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
 		AnchorPane root = (AnchorPane) loader.load();
 		loginController controller = loader.getController();
 		controller.shutdown();
 		FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/view/photo.fxml"));
 		root = (AnchorPane) loader2.load();
+		photoController controller2 = loader2.getController();
+		controller2.startUp(album,globalUser);
 		Scene scene = new Scene(root);
 		Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		window.setScene(scene);

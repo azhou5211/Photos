@@ -19,7 +19,9 @@ public class Photo implements Serializable {
 	private ArrayList<Tag> tags;
 	private String caption;
 	private String thumbnail;
+	
 	private String location;
+	private String filePath;
 	private Date date;
 	
 	public Photo() {
@@ -28,6 +30,7 @@ public class Photo implements Serializable {
 		setThumbnail(null);
 		setDate(new Date());
 		this.setLocation("");
+		this.setFilePath("");
 	}
 
 	public ArrayList<Tag> getTags() {
@@ -61,6 +64,10 @@ public class Photo implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	public void setDate(long date) {
+		this.date = new Date(date);
+	}
 
 	public String getLocation() {
 		return location;
@@ -68,5 +75,13 @@ public class Photo implements Serializable {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }

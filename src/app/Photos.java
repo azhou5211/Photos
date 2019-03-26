@@ -14,8 +14,6 @@ public class Photos extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-		//FXMLLoader loader = new FXMLLoader();
-		//loader.setLocation(getClass().getResource("/view/login.fxml"));
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
 		AnchorPane root = (AnchorPane) loader.load();
 		controller = loader.getController();
@@ -27,24 +25,12 @@ public class Photos extends Application {
 		primaryStage.show();
 	}
 	
-	
 	@Override
 	public void stop() throws IOException, ClassNotFoundException {
-		//FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-		//AnchorPane root = (AnchorPane) loader.load();
-		//loginController controller = loader.getController();
 		controller.shutdown();
 	}
 	
-	
 	public static void main(String[] args) {
-		/*
-		FileInputStream fos = new FileInputStream("files/users.txt");
-		ObjectInputStream oos = new ObjectInputStream(fos);
-		@SuppressWarnings("unchecked")
-		listOfUsers = (ArrayList<User>) oos.readObject();
-		oos.close();
-		*/
 		launch(args);
 	}
 }
