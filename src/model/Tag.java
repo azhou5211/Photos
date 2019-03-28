@@ -42,4 +42,12 @@ public class Tag implements Serializable {
 	public String toString() {
 		return tagName + "=" + tagValue;
 	}
+	
+	public boolean equals(Object o) {
+		if(o==null || (!(o instanceof Tag))) {
+			return false;
+		}
+		Tag t = (Tag)o;
+		return this.toString().equalsIgnoreCase(t.toString());
+	}
 }

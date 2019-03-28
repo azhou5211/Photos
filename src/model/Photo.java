@@ -73,4 +73,13 @@ public class Photo implements Serializable {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
+	
+	public boolean equals(Object o) {
+		if(o==null || (!(o instanceof Photo))) {
+			return false;
+		}
+		Photo p = (Photo)o;
+		return this.getFilePath().equals(p.getFilePath());
+	}
+	
 }

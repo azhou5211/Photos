@@ -39,6 +39,14 @@ public class Album implements Serializable {
 	public String toString() {
 		return this.albumName;
 	}
+	
+	public boolean equals(Object o) {
+		if(o==null || (!(o instanceof Album))) {
+			return false;
+		}
+		Album t = (Album)o;
+		return this.toString().equalsIgnoreCase(t.toString());
+	}
 
 	public ArrayList<Photo> getPhotoList() {
 		return photoList;

@@ -86,6 +86,6 @@ public class loginController {
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(listOfUsers);
 		oos.close();
-		System.out.println("Files have been saved");
+		//System.out.println("Files have been saved");
 	}
 }
