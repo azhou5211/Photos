@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import javax.activation.MimetypesFileTypeMap;
 import javax.imageio.ImageIO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -42,7 +40,7 @@ public class photoController {
 
 	@FXML private MenuBar myMenuBar;
 	@FXML private TilePane tilepane;
-	@FXML private Pagination pagination;
+	//@FXML private Pagination pagination;
 	@FXML private ListView<Tag> tagListView;
 	@FXML private ListView<Album> albumListView;
 	@FXML private TextField newTagName;
@@ -272,25 +270,6 @@ public class photoController {
 		a.setLatestDate(getMaxDate(a));
 		
 		deletePhoto(new ActionEvent());
-		/*
-		globalAlbum.getPhotoList().remove(currentPhoto);
-		tilepane.getChildren().remove(previousBox);
-		
-		if(globalAlbum.getPhotoList().size()==0) {
-			globalAlbum.setCreateDate(null);
-			globalAlbum.setLatestDate(null);
-		} else {
-			Date minDate = getMinDate(globalAlbum);
-			Date maxDate = getMaxDate(globalAlbum);
-			globalAlbum.setCreateDate(minDate);
-			globalAlbum.setLatestDate(maxDate);
-		}
-		
-		captionText.setText("");
-		tagListView.getItems().clear();
-		currentPhoto = null;
-		previousBox = null;
-		*/
 	}
 	
 	public void logoff(ActionEvent e) throws IOException, ClassNotFoundException {
@@ -321,6 +300,24 @@ public class photoController {
 		window.show();
 	}
 	
+	public void viewSlideShow(ActionEvent e) throws IOException {
+		if(globalAlbum.getPhotoList().size()==0) {
+			setAlert("There are no photos in the Album to view!");
+			return;
+		}
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/slideshow.fxml"));
+		AnchorPane root = (AnchorPane) loader.load();
+		slideShowController controller = loader.getController();
+		controller.startup(globalAlbum);
+		Scene scene = new Scene(root);
+		Stage window = new Stage();
+		window.setTitle("Slide Show");
+		window.setScene(scene);
+		window.setResizable(false);
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.showAndWait();
+	}
+	
 	public void setAlert(String alertString) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setContentText(alertString);
@@ -331,7 +328,6 @@ public class photoController {
 		globalAlbum = a;
 		globalUser = u;
 		
-		// TODO Need to file in the tilepane and the pagination here!!
 		tilepane.getChildren().clear();
 		previousBox = null;
 		currentPhoto = null;
@@ -377,6 +373,7 @@ public class photoController {
 		ImageView imageView = new ImageView();
 		File file = new File(p.getFilePath());
 		try {
+			@SuppressWarnings("unused")
 			BufferedImage bufferedImage = ImageIO.read(file);
 			Image image = new Image(file.toURI().toString());
 			imageView.setImage(image);

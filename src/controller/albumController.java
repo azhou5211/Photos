@@ -3,9 +3,11 @@ package controller;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -15,10 +17,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 
@@ -38,8 +42,15 @@ public class albumController {
 	@FXML private TextField modifiedDate;
 	@FXML private TextField renameTextField;
 	@FXML private TextField newAlbumName;
+	@FXML private TextField tagName1;
+	@FXML private TextField tagName2;
+	@FXML private TextField tagValue1;
+	@FXML private TextField tagValue2;
+	@FXML private DatePicker startDate;
+	@FXML private DatePicker endDate;
+	
 	static User globalUser;
-	static DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");  
+	static DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
 	public void setUp(User u) {
 		globalUser = u;
@@ -51,6 +62,7 @@ public class albumController {
 			}
 		});
 		
+		albumList.getItems().clear();
 		ArrayList<Album> list = u.getAlbumList();
 		for(Album a: list) {
 			albumList.getItems().add(a);
@@ -70,7 +82,7 @@ public class albumController {
 		
 		// check duplicate
 		if(checkDuplicate(newName,-1)) {
-			setAlert("Cannot have duplicate Album Name");
+			setAlert("Cannot have duplicate Album Name!");
 			return;
 		}
 		
@@ -112,7 +124,7 @@ public class albumController {
 		
 		// check duplicate
 		if (checkDuplicate(name,index)) {
-			setAlert("Cannot have duplicate Album names");
+			setAlert("Cannot have duplicate Album names!");
 			return;
 		}
 		
@@ -120,6 +132,193 @@ public class albumController {
 		a.setAlbumName(name);
 		
 		sortList();
+	}
+	
+	public void singleTagSearch(ActionEvent e) throws IOException {
+		/*
+		 * @FXML private TextField tagName1;
+		 * @FXML private TextField tagName2;
+		@FXML private TextField tagValue1;
+		@FXML private TextField tagValue2;
+		 */
+
+		if(tagName1.getText().length()==0 || tagValue1.getText().length()==0) {
+			setAlert("Tag name 1 and Tag Value 1 cannot be empty!");
+			return;
+		}
+		
+		ArrayList<Photo> list = new ArrayList<Photo>();
+		Tag t = new Tag(tagName1.getText(),tagValue1.getText());
+		
+		for(Album a: globalUser.getAlbumList()) {
+			for(Photo p: a.getPhotoList()) {
+				for(Tag t1: p.getTags()) {
+					if(t1.equals(t)) {
+						if(list.contains(p)) continue;
+						list.add(p);
+					}
+				}
+			}
+		}
+		
+		if(list.size() == 0) {
+			setAlert("No photos found!");
+			return;
+		}
+		Stage tempwindow = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		searchResult(list, tempwindow);
+		
+		
+	}
+	
+	public void andTagSearch(ActionEvent e) throws IOException {
+		
+		if(tagName1.getText().length()==0 || tagValue1.getText().length()==0) {
+			setAlert("Tag name 1 and Tag Value 1 cannot be empty!");
+			return;
+		}
+		
+		if(tagName2.getText().length()==0 || tagValue2.getText().length()==0) {
+			setAlert("Tag name 2 and Tag Value 2 cannot be empty!");
+			return;
+		}
+		
+		ArrayList<Photo> list = new ArrayList<Photo>();
+		Tag t = new Tag(tagName1.getText(),tagValue1.getText());
+		Tag t2 =  new Tag(tagName2.getText(),tagValue2.getText());
+		boolean flag1 = false;
+		boolean flag2 = false;
+		for(Album a: globalUser.getAlbumList()) {
+			for(Photo p: a.getPhotoList()) {
+				flag1 = false;
+				flag2 = false;
+				for(Tag t1: p.getTags()) {
+					if(t1.equals(t)) {
+						flag1 = true;
+					}
+					if(t1.equals(t2)) {
+						flag2 = true;
+					}
+				}
+				if(flag1 && flag2) {
+					if(list.contains(p)) continue;
+					list.add(p);
+				}
+				
+			}
+		}
+		
+		if(list.size() == 0) {
+			setAlert("No photos found!");
+			return;
+		}
+		Stage tempwindow = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		searchResult(list, tempwindow);
+		
+	}
+	
+	public void orTagSearch(ActionEvent e) throws IOException {
+		
+		if(tagName1.getText().length()==0 || tagValue1.getText().length()==0) {
+			setAlert("Tag name 1 and Tag Value 1 cannot be empty!");
+			return;
+		}
+		
+		if(tagName2.getText().length()==0 || tagValue2.getText().length()==0) {
+			setAlert("Tag name 2 and Tag Value 2 cannot be empty!");
+			return;
+		}
+		
+		ArrayList<Photo> list = new ArrayList<Photo>();
+		Tag t = new Tag(tagName1.getText(),tagValue1.getText());
+		Tag t2 =  new Tag(tagName2.getText(),tagValue2.getText());
+		boolean flag1 = false;
+		boolean flag2 = false;
+		for(Album a: globalUser.getAlbumList()) {
+			for(Photo p: a.getPhotoList()) {
+				flag1 = false;
+				flag2 = false;
+				for(Tag t1: p.getTags()) {
+					if(t1.equals(t)) {
+						flag1 = true;
+					}
+					if(t1.equals(t2)) {
+						flag2 = true;
+					}
+				}
+				if(flag1 || flag2) {
+					if(list.contains(p)) continue;
+					list.add(p);
+				}
+				
+			}
+		}
+		
+		if(list.size() == 0) {
+			setAlert("No photos found!");
+			return;
+		}
+		Stage tempwindow = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		searchResult(list, tempwindow);
+		
+		
+	}
+	
+	public void dateSearch(ActionEvent e) throws IOException {
+		//startDate
+		//endDate
+		if(startDate.getValue()==null || endDate.getValue()==null) {
+			setAlert("Start Date and End Date cannot be empty!");
+			return;
+		}
+		
+		// Check if end date is after start date
+		
+		LocalDate d = startDate.getValue();
+		Date d1 = java.sql.Date.valueOf(d);
+		d = endDate.getValue();
+		Date d2 = java.sql.Date.valueOf(d);
+		//Date d2
+		if(d1.after(d2)) {
+			setAlert("Start Date should be before the End Date!");
+			return;
+		}
+		//d1.compareTo(d2<=0)
+		
+		ArrayList<Photo> list = new ArrayList<Photo>();
+		String day1 = dateFormat.format(d1);
+		String day2 = dateFormat.format(d2);
+		for(Album a: globalUser.getAlbumList()) {
+			for(Photo p: a.getPhotoList()) {
+				if((p.getDate().compareTo(d2)<0 || dateFormat.format(p.getDate()).equals(day2)) && (p.getDate().compareTo(d1)>0 || dateFormat.format(p.getDate()).equals(day1))) {
+					if(list.contains(p)) continue;
+					list.add(p);
+				}			
+			}
+		}
+		
+		if(list.size() == 0) {
+			setAlert("No photos found!");
+			return;
+		}
+		Stage tempwindow = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		searchResult(list, tempwindow);
+	}
+	
+	public void searchResult(ArrayList<Photo> list, Stage primaryWindow) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/searchResult.fxml"));
+		AnchorPane root = (AnchorPane) loader.load();
+		searchResultController controller = loader.getController();
+		Stage window = new Stage();
+		controller.startUp(globalUser,list,primaryWindow);
+		Scene scene = new Scene(root);
+		window.setTitle("Search Results");
+		window.setScene(scene);
+		window.setResizable(false);
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.show();
+		//sortList();
+		//window.show();
 	}
 	
 	public void displayDetails(Album a) {
@@ -198,6 +397,10 @@ public class albumController {
 		}
 		ObservableList<Album> tempList = albumList.getItems();
 		Collections.sort(tempList, new albumSorter());
+	}
+	
+	public void updateList(Album a) {
+		
 	}
 	
 	public void setAlert(String alertString) {

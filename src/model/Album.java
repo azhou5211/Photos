@@ -83,4 +83,8 @@ public class Album implements Serializable {
 	public void setLatestDate(long latestDate) {
 		this.latestDate = new Date(latestDate);
 	}
+	
+	public void addPhoto(Photo p) {
+		this.photoList.add(p);
+	}
 }
