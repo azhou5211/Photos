@@ -101,6 +101,10 @@ public class albumController {
 			setAlert("Must select an Album to Delete!");
 			return;
 		}
+		if(albumToDelete.toString().equals("Stock Photos") && globalUser.getUsername().equals("stock")) {
+			setAlert("Cannot delete stock photos of stock user!");
+			return;
+		}
 		
 		globalUser.getAlbumList().remove(albumToDelete);
 		albumList.getItems().remove(albumToDelete);

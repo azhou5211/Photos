@@ -87,6 +87,10 @@ public class adminController {
 			setAlert("Cannot delete admin!");
 			return;
 		}
+		if(u.getUsername().equals("stock")) {
+			setAlert("Cannot delete stock user!");
+			return;
+		}
 		userList.getItems().remove(u);
 		write();
 	}
