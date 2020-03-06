@@ -1,0 +1,5 @@
+This is a demonstration of GUI's using JavaFX.
+
+The program allows people to create users and delete users.
+Each user can create albums, add photos to album, and view added photos.
+The program uses serialization and JSON to store previously added albums and photos.
